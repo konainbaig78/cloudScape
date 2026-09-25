@@ -211,9 +211,7 @@ const AITutor = ({
     setLoading(true);
 
     try {
-      const response = await fetch(
-        "http://localhost:5000/api/explain",
-        {
+      const response = await fetch("/api/explain", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
