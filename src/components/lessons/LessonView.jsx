@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import CloudScene from '../cloud/CloudScene'
+import { Link } from "react-router-dom";
 
 export default function LessonView({
   lesson,
