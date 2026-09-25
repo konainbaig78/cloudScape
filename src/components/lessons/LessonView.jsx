@@ -276,12 +276,12 @@ export default function LessonView({
             </p>
           </div>
 
-          <a
+          <Link
             href="/quizzes"
             className="shrink-0 rounded-xl bg-violet-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-violet-400"
           >
             Take Quiz →
-          </a>
+          </Link>
         </div>
       </section>
     </div>
