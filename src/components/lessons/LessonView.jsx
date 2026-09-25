@@ -1,7 +1,7 @@
 import { useState } from 'react'
+import { useNavigate } from 'react-router-dom'
 
 import CloudScene from '../cloud/CloudScene'
-import { Link } from "react-router-dom";
 
 export default function LessonView({
   lesson,
@@ -11,6 +11,8 @@ export default function LessonView({
 
   const [activeSection, setActiveSection] =
     useState(0)
+
+  const navigate = useNavigate()
 
   if (!lesson) {
     return (
@@ -32,44 +34,37 @@ export default function LessonView({
     <div className="space-y-6">
       {/* ================= LESSON HEADER ================= */}
       <section className="rounded-3xl border border-white/10 bg-white/[0.03] p-6 sm:p-8">
-        <div className="flex flex-wrap items-start justify-between gap-4">
-          <div>
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="rounded-full border border-violet-400/20 bg-violet-500/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-violet-300">
-                Concept{' '}
-                {String(
-                  lesson.number
-                ).padStart(2, '0')}
-              </span>
+        <div className="flex flex-wrap items-center gap-2">
+          <span className="rounded-full border border-violet-400/20 bg-violet-500/10 px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-violet-300">
+            Concept{' '}
+            {String(
+              lesson.number
+            ).padStart(2, '0')}
+          </span>
 
-              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-white/40">
-                {lesson.level}
-              </span>
-
-              <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-white/40">
-                {lesson.duration}
-              </span>
-            </div>
-
-            <h1 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-              {lesson.title}
-            </h1>
-
-            <p className="mt-3 max-w-3xl text-sm leading-7 text-white/45 sm:text-base">
-              {lesson.description}
-            </p>
-          </div>
-
-          <div className="rounded-2xl border border-white/10 bg-white/[0.03] px-4 py-3">
-            <p className="text-[10px] uppercase tracking-wider text-white/25">
-              Category
-            </p>
-
-            <p className="mt-1 text-sm font-medium text-white/70">
-              {lesson.category}
-            </p>
-          </div>
+          <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1 text-[10px] font-medium uppercase tracking-wider text-white/40">
+            {lesson.category}
+          </span>
         </div>
+
+        <h1 className="mt-4 text-3xl font-bold tracking-tight text-white sm:text-4xl">
+          {lesson.title}
+        </h1>
+
+        <div className="mt-3 flex flex-wrap items-center gap-3 text-xs font-medium text-white/35">
+          <span>{lesson.level}</span>
+
+          <span
+            className="h-3 w-px bg-white/10"
+            aria-hidden="true"
+          />
+
+          <span>{lesson.duration}</span>
+        </div>
+
+        <p className="mt-4 max-w-3xl text-sm leading-7 text-white/45 sm:text-base">
+          {lesson.description}
+        </p>
       </section>
 
       {/* ================= LEARNING GOALS ================= */}
@@ -118,9 +113,9 @@ export default function LessonView({
               </h2>
             </div>
 
-            <p className="text-xs text-white/30">
+            <span className="rounded-full border border-white/10 bg-white/5 px-3 py-1.5 text-xs text-white/35">
               Click a component to inspect it
-            </p>
+            </span>
           </div>
         </div>
 
@@ -136,7 +131,7 @@ export default function LessonView({
 
           {/* Selected Node */}
           {selectedNode && (
-            <div className="absolute right-4 top-4 z-20 w-[280px] rounded-2xl border border-white/10 bg-[#0b0f19]/90 p-5 shadow-2xl backdrop-blur-xl">
+            <div className="absolute right-4 top-4 z-20 w-[280px] rounded-2xl border border-white/10 bg-[#0b0f19]/90 p-5 shadow-2xl ring-1 ring-white/5 backdrop-blur-xl">
               <div className="flex items-start justify-between gap-3">
                 <div>
                   <p className="text-[10px] uppercase tracking-[0.2em] text-violet-400">
@@ -200,8 +195,8 @@ export default function LessonView({
 
         {/* Section tabs */}
         {lesson.sections?.length > 1 && (
-          <div className="overflow-x-auto border-b border-white/10">
-            <div className="flex min-w-max gap-1 px-4 py-3">
+          <div className="border-b border-white/10 px-4 py-3 [mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)]">
+            <div className="flex gap-1 overflow-x-auto [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
               {lesson.sections.map(
                 (section, index) => (
                   <button
@@ -211,7 +206,7 @@ export default function LessonView({
                       setActiveSection(index)
                     }
                     className={`
-                      rounded-xl px-4 py-2.5
+                      shrink-0 rounded-xl px-4 py-2.5
                       text-sm font-medium
                       transition
                       ${
@@ -276,12 +271,13 @@ export default function LessonView({
             </p>
           </div>
 
-          <Link
-            to="/quizzes"
+          <button
+            type="button"
+            onClick={() => navigate('/quizzes')}
             className="shrink-0 rounded-xl bg-violet-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-violet-400"
           >
             Take Quiz →
-          </Link>
+          </button>
         </div>
       </section>
     </div>

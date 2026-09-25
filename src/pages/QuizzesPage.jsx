@@ -26,6 +26,14 @@ export default function QuizzesPage() {
     )
   }, [selectedLessonId])
 
+  const progressPercent = lessons.length
+    ? Math.round(
+        (completedLessons.length /
+          lessons.length) *
+          100
+      )
+    : 0
+
   function handleQuizComplete(
     isCorrect
   ) {
@@ -102,22 +110,31 @@ export default function QuizzesPage() {
         </section>
 
         {/* Quiz area */}
-        <section className="mt-10 grid gap-8 lg:grid-cols-[300px_1fr]">
-          {/* Sidebar */}
-          <aside>
-            <div className="lg:sticky lg:top-24">
-              <div className="mb-4">
-                <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/30">
-                  Choose a quiz
-                </p>
+        <section className="mt-10">
+          {/* Horizontal concept picker */}
+          <div className="sticky top-4 z-10 -mx-5 mb-8 border-b border-white/10 bg-[#05070d]/80 px-5 pb-5 pt-1 backdrop-blur-md sm:-mx-6 sm:px-6 lg:-mx-8 lg:px-8">
+            <div className="mb-3 flex items-end justify-between gap-4">
+              <p className="text-xs font-semibold uppercase tracking-[0.2em] text-white/30">
+                Choose a quiz
+              </p>
 
-                <p className="mt-1 text-sm text-white/40">
-                  {completedLessons.length} of{' '}
-                  {lessons.length} completed
-                </p>
-              </div>
+              <p className="whitespace-nowrap text-sm text-white/40">
+                {completedLessons.length} of{' '}
+                {lessons.length} completed
+              </p>
+            </div>
 
-              <div className="space-y-2">
+            <div className="mb-4 h-1 w-full overflow-hidden rounded-full bg-white/5">
+              <div
+                className="h-full rounded-full bg-violet-500 transition-all duration-500"
+                style={{
+                  width: `${progressPercent}%`,
+                }}
+              />
+            </div>
+
+            <div className="[mask-image:linear-gradient(to_right,transparent,black_16px,black_calc(100%-16px),transparent)]">
+              <div className="flex snap-x gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
                 {lessons.map((lesson) => {
                   const isSelected =
                     lesson.id ===
@@ -138,8 +155,8 @@ export default function QuizzesPage() {
                         )
                       }
                       className={`
-                        flex w-full items-center gap-3
-                        rounded-2xl border p-3
+                        flex shrink-0 snap-start items-center gap-2.5
+                        rounded-2xl border px-4 py-3
                         text-left transition
                         ${
                           isSelected
@@ -150,9 +167,9 @@ export default function QuizzesPage() {
                     >
                       <span
                         className={`
-                          flex h-9 w-9 shrink-0
+                          flex h-7 w-7 shrink-0
                           items-center justify-center
-                          rounded-xl text-xs font-bold
+                          rounded-lg text-xs font-bold
                           ${
                             isCompleted
                               ? 'bg-emerald-400/10 text-emerald-300'
@@ -169,24 +186,18 @@ export default function QuizzesPage() {
                             ).padStart(2, '0')}
                       </span>
 
-                      <span className="min-w-0 flex-1">
-                        <span className="block truncate text-sm font-medium text-white">
-                          {lesson.title}
-                        </span>
-
-                        <span className="mt-0.5 block text-xs text-white/30">
-                          5 questions
-                        </span>
+                      <span className="whitespace-nowrap text-sm font-medium text-white">
+                        {lesson.title}
                       </span>
                     </button>
                   )
                 })}
               </div>
             </div>
-          </aside>
+          </div>
 
           {/* Quiz */}
-          <div className="min-w-0">
+          <div className="mx-auto max-w-3xl">
             {selectedLesson && (
               <>
                 <div className="mb-5">
