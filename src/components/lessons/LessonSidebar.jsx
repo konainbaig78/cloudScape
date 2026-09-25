@@ -64,7 +64,7 @@ export default function LessonSidebar({
         </div>
 
         {/* Contained lesson list */}
-        <div className="max-h-[680px] space-y-3 overflow-y-auto pr-2 scrollbar-thin">
+       <div className="max-h-[76rem] overflow-y-auto [scrollbar-width:none] [-ms-overflow-style:none] [&::-webkit-scrollbar]:hidden">
           {lessons.map((lesson) => (
             <LessonCard
               key={lesson.id}

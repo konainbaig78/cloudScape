@@ -4,13 +4,27 @@ const q = (
   options,
   answer,
   explanation
-) => ({
-  id,
-  question,
-  options,
-  answer,
-  explanation,
-})
+) => {
+  const shuffled = options.map((text, index) => ({
+    text,
+    isCorrect: index === answer,
+  }))
+
+  // Fisher-Yates shuffle
+  for (let i = shuffled.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+
+    ;[shuffled[i], shuffled[j]] = [shuffled[j], shuffled[i]]
+  }
+
+  return {
+    id,
+    question,
+    options: shuffled.map(item => item.text),
+    answer: shuffled.findIndex(item => item.isCorrect),
+    explanation,
+  }
+}
 
 const architecture = (nodes, connections) => ({
   nodes,
