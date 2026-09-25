@@ -277,7 +277,7 @@ export default function LessonView({
           </div>
 
           <Link
-            href="/quizzes"
+            to="/quizzes"
             className="shrink-0 rounded-xl bg-violet-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-violet-400"
           >
             Take Quiz →
